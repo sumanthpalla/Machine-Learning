@@ -1,0 +1,223 @@
+\documentclass{article}
+
+\usepackage{enumitem}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{amsmath,amsthm,hyperref}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\DeclareMathOperator{\Tr}{tr}
+\usepackage{bbm}
+
+% Margins
+\usepackage[top=2.5cm, left=3cm, right=3cm, bottom=4.0cm]{geometry}
+% Colour table cells
+\usepackage[table]{xcolor}
+
+% Get larger line spacing in table
+\newcommand{\tablespace}{\\[1.25mm]}
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\tstrut{\rule{0pt}{2.0ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' /
+
+% my new commands
+\newcommand\partialkj{\frac{\partial^2}{\partial\theta_k\partial\theta_j}}
+\makeatletter
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+\newcommand{\minus}{\scalebox{0.5}[1.0]{$-$}}
+\newcommand{\zero}{\scalebox{0.6}[0.75]{$^{(0)}$}}
+\newcommand{\supi}[1]{\scalebox{0.6}[0.75]{$^{(#1)}$}}
+\newcommand{\bigDash}{\scalebox{3.0}[1.0]{$-$}}
+
+%%%%%%%%%%%%%%%%%
+%     Title     %
+%%%%%%%%%%%%%%%%%
+
+\title{Problem Set \#0: Linear Algebra, Multivariable Calculus, and Probability}
+\author{Sumanth Palla}
+\date{\today}
+
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%
+%   Problem 1   %
+%%%%%%%%%%%%%%%%%
+\section{Problem 1}
+\textbf{Gradients and Hessians\\\\\ }
+a. Let $f(x) = \frac{1}{2} x^TAx + b^Tx$, where $A$ is symmetric matrix and $b \in \mathbb{R}^n$ is a vector. Now, $\nabla f(x)$ denotes the Gradient of the function $f$ which maps
+a n-dimensional point to a Real line. \\
+\begin{align*}
+    \nabla f(x) = \begin{bmatrix}
+        \frac{\partial f(x)}{\partial x_1} \\
+        \vdots \\
+        \frac{\partial f(x)}{\partial x_n} \\
+    \end{bmatrix} \;
+    \text{where} \; x = \begin{bmatrix}
+        x_1 \\
+        \vdots \\
+        x_n
+    \end{bmatrix}
+\end{align*} 
+Let, $A$ be a symmetric matrix defined by 
+\begin{gather*}
+   A =  \begin{bmatrix}
+        a_{11} & a_{12} & a_{13} & \hdots & a_{1n} \\
+        a_{21}  & a_{22} & a_{23} & \hdots & a_{2n} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & a_{n3} & \hdots &  a_{nn} \\
+    \end{bmatrix} \,
+    \text{and} \,
+    A = A^T
+\end{gather*} 
+Therefore, 
+\begin{gather*}
+    = \nabla f(x) = \nabla (\frac{1}{2} x^TAx + b^Tx) = \nabla(\frac{1}{2} x^TAx) + \nabla(b^Tx) \\
+    \nabla (\frac{1}{2} x^TAx) = \frac{1}{2} \nabla x^TAx = \frac{1}{2} \nabla (x^T)\begin{bmatrix}
+        a_{11}x_{1} + a_{12}x_{2} + \hdots + a_{1n}x_{n} \\
+        \vdots \\
+        a_{n1}x_{1} + a_{12}x_{2} + \hdots + {a_nn}x_n \\
+    \end{bmatrix} \\
+    = \frac{1}{2} \nabla \begin{bmatrix}
+        x_1 & x_2 & x_3 & \hdots & x_n
+    \end{bmatrix} 
+    \begin{bmatrix}
+        a_{11}x_{1} + a_{12}x_{2} + \hdots + a_{1n}x_{n} \\
+        \vdots \\
+        a_{n1}x_{1} + a_{12}x_{2} + \hdots + {a_nn}x_n \\
+    \end{bmatrix} \\
+    = \frac{1}{2} \nabla x_1 (a_{11}x_1 + \hdots + a_{1n}{x_n}) + x_2 (a_{21}x_1 + \hdots + a_{2n}) + \hdots + x_n(a_{n1}x_1 + \hdots a_{nn}x_n) \\
+    = \frac{1}{2} \begin{bmatrix}
+        \frac{\partial}{\partial x_1}( x_1 (a_{11}x_1 + \hdots + a_{1n}{x_n}) + x_2 (a_{21}x_1 + \hdots + a_{2n}) + \hdots +
+         x_n(a_{n1}x_1 + \hdots a_{nn}x_n)) \\
+        \vdots \\
+        \frac{\partial}{\partial x_n} (x_1 (a_{11}x_1 + \hdots + a_{1n}{x_n}) + x_2 (a_{21}x_1 + \hdots + a_{2n}) + \hdots +
+        x_n(a_{n1}x_1 + \hdots a_{nn}x_n)) \\
+    \end{bmatrix} \\
+\end{gather*}
+\begin{gather*}
+    = \frac{1}{2}\begin{bmatrix}
+        2(a_{11}x_{1} + a_{12}x_{2} + \hdots + a_{1n}x_{n}) \\
+        \vdots \\
+        2(a_{n1}x_{1} + a_{12}x_{2} + \hdots + {a_nn}x_n) \\
+    \end{bmatrix} \\
+    = \begin{bmatrix}
+        a_{11}x_{1} + a_{12}x_{2} + \hdots + a_{1n}x_{n} \\
+        \vdots \\
+        a_{n1}x_{1} + a_{12}x_{2} + \hdots + {a_nn}x_n \\
+    \end{bmatrix} \\
+    = \begin{bmatrix}
+        \sum_{j=1}^{j=n}a_{1j}x_1 \\
+        \sum_{j=1}^{j=n}a_{2j}x_2 \\
+        \vdots \\
+        \sum_{j=1}^{j=n}a_{nj}x_n \\
+    \end{bmatrix} \\
+    = \textbf{Ax} \\
+    \therefore \frac{1}{2} \nabla x^TAx = Ax \\
+\end{gather*}
+Now, \begin{gather*}
+    \nabla b^Tx = \begin{bmatrix}
+        b_1 & b_2 & b_3 & \hdots & b_n
+    \end{bmatrix}
+    \begin{bmatrix}
+        x_1 \\
+        x_2 \\
+        x_3 \\
+        \vdots \\
+        x_n
+    \end{bmatrix}
+    = b_1x_1 + b_2x_2 + b_3x_3 + \hdots + b_nx_n \\
+    = \begin{bmatrix}
+        \frac{\partial}{\partial x_1}(b_1x_1 + b_2x_2 + b_3x_3 + \hdots + b_nx_n  ) \\
+        \vdots \\
+        \frac{\partial}{\partial x_n} (b_1x_1 + b_2x_2 + b_3x_3 + \hdots + b_nx_n ) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        b_1 \\
+        b_2 \\
+        b_3 \\
+        \vdots \\
+        b_n
+    \end{bmatrix} = b \\
+    \therefore \nabla b^Tx = b \\
+    \therefore \nabla_x f(x) = Ax + b \\
+\end{gather*}
+b. Given, $f(x) = g(h(x))$ where $g: \mathbb{R} \rightarrow \mathbb{R}$ is differentiable and $h: \mathbb{R}^n \rightarrow \mathbb{R}$ is differentiable
+
+\begin{gather*}
+    \text{by chain rule}, \, 
+    \nabla_x f(x) = g'(h(x))\nabla_x h(x) \; 
+\end{gather*}
+c. Given, $f(x) = \frac{1}{2} x^TAx + b^Tx$, $A$ is symmetric and $b \in \mathbb{R}^n$. \\
+\begin{gather*}
+    f(x) = 
+    \begin{bmatrix}
+        x_1 & x_2 & \hdots & x_n
+    \end{bmatrix}
+    \begin{bmatrix}
+        x_1a_{11} + x_2a_{12} + \hdots + x_na_{1n} \\
+        \vdots  \\
+        x_na_{n1} + x_na_{n2} + \hdots + x_na_{nn} \\
+    \end{bmatrix}
+    +
+    (b_1x_1 + b_2x_2 + \hdots + b_nx_n) \\
+    f(x) = x_1(x_1a_{11} + x_2a_{12} + \hdots + x_na_{1n}) + 
+    x_2(x_1a_{21} +  x_2a_{22} + \hdots + x_na_{2n} ) + \hdots + 
+    x_n(x_1a_{n1} +  x_2a_{n2} + \hdots + x_na_{nn} ) \\ 
+    + (b_1x_1 + b_2x_2 + \hdots + b_nx_n) \\
+    f(x) = a_{11}x_1^2 + a_{22}x_2^2 + \hdots + a_{nn}x_n^2 + a_{12}x_1x_2 + a_{21}x_2x_1 + \hdots + b_1x_1 + b_2x_2 + \hdots + b_nx_n \\
+\end{gather*}
+\begin{gather*}
+    \nabla _x ^2 f(x) = \begin{bmatrix}
+        \frac{\partial ^2}{\partial x_1^2} f(x) & \frac{\partial ^2}{\partial x_1 \partial x_2}f(x) & \hdots & \frac{\partial ^2}{\partial x_1 \partial x_n}f(x) \\
+        \frac{\partial ^2}{\partial x_2 \partial x_1}f(x) &\frac{\partial ^2}{\partial x_2^2} f(x) & \hdots & \frac{\partial ^2}{\partial x_2 \partial x_n}f(x) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        \frac{\partial ^2}{\partial x_n \partial x_1}f(x) &\frac{\partial ^2}{\partial x_n \partial x_2} f(x) & \hdots & \frac{\partial ^2}{\partial x_n^2}f(x) \\
+    \end{bmatrix}\\
+    \therefore \nabla_x^2 f(x) = \begin{bmatrix}
+        a_{11} & a_{12} & a_{13} & \hdots & a_{1n} \\
+        a_{21}  & a_{22} & a_{23} & \hdots & a_{2n} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & a_{n3} & \hdots &  a_{nn} \\
+    \end{bmatrix} = A
+\end{gather*}
+d. Given $f(x) = g(a^T x)$ where $g:\mathbb{R} \rightarrow \mathbb{R}$ is continuously differentiable and $a \in \mathbb{R}^n$.
+\begin{gather*}
+    \nabla_x f(x) = g'(a^Tx)\nabla_x(a^Tx) = g'(a^Tx)a \; [\because \nabla a^Tx = a] \\
+    \nabla_x^2 f(x) = \nabla_x (\nabla_x f(x))= \nabla(g'(a^Tx)a) = g''(a^Tx)aa^T
+\end{gather*}
+\section{Problem 2}
+\textbf{Positive Definite matrices}\\
+A matrix $A \in \mathbb{R}^{n \times n}$ is \textit{positive semi-definite} PSD, denoted $A \succ 0$, if $A=A^T$ and $x^TAx \geq 0 \; \forall x \in \mathbb{R}^n$
+A matrix $A$ is \textit{positive definite} denoted $ A \succeq 0$ if $ A = A^T \; \text(and) \; x^TAx >0 \; \forall x \neq 0$\\
+a. Given $z \in \mathbb{R}^n$ is a 
+\begin{equation*}
+    \begin{split}
+        A &= zz^T \\
+        x^TAx &= x^Tzz^Tx \\
+        &= (z^Tx)^2 \geq 0
+    \end{split}
+\end{equation*}
+Hence, we can say that given matrix $A$ is \textit{positive semi-definite} PSD, denoted $A \succeq 0$ for given $z \in \mathbb{R}^n$.
+
+b. Given, $A = zz^T$, Null space is defined as vector space of x for a given vector $x \in \mathbb{R}^n$, where $Ax = 0$, i.e, $zz^Tx=0$
+From previous problem, for a given $z \in \mathbb{R} ^n $, but $A$ is PSD, therefore, $A \succeq 0 $ and $Ax = 0$ hence the only solution is $x=0$ \\
+c. \( A \in \mathbb{R}^{n \times n}\) is PSD. Let, \( B \in \mathbb{R} ^ {m \times n}\) is arbitary matrix. For an arbitary vector, p \(\in \mathbb{R}^m \) and q
+\( \in \mathbb{R}^n \), \( B = pq^T\)
+\begin{gather*}
+    B = pq^T \\
+    BAB^T = pq^T A qp^T \\
+    BAB^T = 
+\end{gather*}
+
+\section*{Prolem 3}
+\textbf{Eigen Vectors, Eigenvalues, and the spectral theorem}
+
+a. A matrix is \( A \in \mathbb{R}^
+
+\end{document}
